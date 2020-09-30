@@ -13,7 +13,7 @@ var enemyMoney = 10;
 var fight = function (enemyName) {
   // alert users that they are starting the gameround
   
-  while(enemyHealth>0){
+  while(enemyHealth>0 && playerHealth>0){
   var promptFight = window.prompt("FIGHT or skip");
 
     // control flight or fight
@@ -29,6 +29,7 @@ var fight = function (enemyName) {
         // check enemys health
         if (enemyHealth <= 0) {
             window.alert(enemyName + " has died!");
+            break;
         } else {
             window.alert(enemyName + " still has: " + enemyHealth + " health left");
         }
@@ -43,6 +44,7 @@ var fight = function (enemyName) {
         // check player health
         if (playerHealth <= 0) {
             window.alert(playerName + " has died!");
+            break //break out if player dies
         } else {
             window.alert(playerName + " still has: " + playerHealth + " health left");
         }
@@ -53,14 +55,15 @@ var fight = function (enemyName) {
 
         //if yes to quit, leave fight
         if (confirmSkip){
+            
             window.alert(playerName + "has decided to skip thuis fight. See ya");
-            playerMoney -= 2;
+            playerMoney -= 10;
+            console.log("Player Money", playerMoney )
+            break;
         }
         else{
             fight();
         }
-
-
 
     } else{
         window.alert("pick either fight or skip try again");
