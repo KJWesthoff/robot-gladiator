@@ -9,31 +9,6 @@ var enemyAttack = 12;
 var enemyMoney = 10;
 
 
-//function to start a new game
-var startGame = function(){
-    debugger;
-    //reset player stats
-    playerHealth = 100;
-    playerAttack = 10;
-    playerMoney = 10;
-
-    // loop over enemies
-    for(var i = 0; i<enemyNames.length; i++){
-        if(playerHealth > 0){
-            window.alert("Welcome to Robot Warriors Round:" + (i+1));
-            var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
-
-            fight(pickedEnemyName);
-        } else {
-            window.alert("You have lost your robot battle! Game over!");
-            break;
-        }
-    }
-    // after loop ends player is eiter out of health or enemies,..
-    endGame();
-}
-
 //functon to end game
 var endGame = function(){
     window.alert("The game has now ended, lets see how you did!")
@@ -55,6 +30,79 @@ var endGame = function(){
 
 
 }
+
+var shop = function(){
+    // ask what the player wants to do
+    var shopOptionPrompt = window.prompt("REFILL health or UPGRADE atttack or LEAVE");
+
+    switch(shopOptionPrompt.toLocaleLowerCase()){
+        case "refill":
+            if (playerMoney>=7){    
+                window.alert("Refilling " + playerName + " health by 20 for 7 credit");
+                playerHealth += 20;
+                playerMoney -= 7;
+            } else {
+                window.alert("You don't have enough money!");
+            }
+                break;
+                
+        case "upgrade":
+            if(playerMoney>=7){
+            window.alert("Upgrading " + playerName + " attack by 6 for 7 credit");
+            playerAttack += 6;
+            playerMoney -=7;
+            } else {
+                window.alert("You don't have enough money!");
+            }            
+
+            break;
+            
+        case "leave":
+            window.alert("Leaving the store.");
+            break;
+        default:
+            window.alert("Pick a valid option- try again");
+            // call shop again to pick valid option
+            shop();
+            break;
+    }
+}
+
+//function to start a new game
+var startGame = function(){
+    debugger;
+    //reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+
+    // loop over enemies
+    for(var i = 0; i<enemyNames.length; i++){
+        if(playerHealth > 0){
+            window.alert("Welcome to Robot Warriors Round:" + (i+1));
+            var pickedEnemyName = enemyNames[i];
+            enemyHealth = 50;
+
+            fight(pickedEnemyName);
+
+            // goto the shop if there are more enemies to fight
+            if(playerHealth > 0 && i < enemyNames.length-1){
+                var storeConfirm = window.confirm("Fight is over, enter the shop?");
+                if(storeConfirm){
+                    shop();        
+                }
+                
+            }
+        } else {
+            window.alert("You have lost your robot battle! Game over!");
+            break;
+        }
+    }
+    // after loop ends player is eiter out of health or enemies,..
+    endGame();
+}
+
+
 
 
 // main fight function
@@ -114,21 +162,21 @@ var fight = function (enemyName) {
   }
 };
 
-// Main loop over enemies
-for (var i =0;i<enemyNames.length; i++){
-    if(playerHealth > 0){
-        window.alert("Welcome to Robot Gladiators! Round " + ( i+1));
-    }else {
-        window.alert("You have lost your robot in battle! Game Over!");
-        break;
-    }
-    //set enemy variables
-    var pickedEnemyName = enemyNames[i]; 
-    enemyHealth = 50;
-    //call fight function
+// // Main loop over enemies
+// for (var i =0;i<enemyNames.length; i++){
+//     if(playerHealth > 0){
+//         window.alert("Welcome to Robot Gladiators! Round " + ( i+1));
+//     }else {
+//         window.alert("You have lost your robot in battle! Game Over!");
+//         break;
+//     }
+//     //set enemy variables
+//     var pickedEnemyName = enemyNames[i]; 
+//     enemyHealth = 50;
+//     //call fight function
     
-    fight(pickedEnemyName);
-}
+//     fight(pickedEnemyName);
+// }
 
 startGame()
 
