@@ -9,6 +9,54 @@ var enemyAttack = 12;
 var enemyMoney = 10;
 
 
+//function to start a new game
+var startGame = function(){
+    debugger;
+    //reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+
+    // loop over enemies
+    for(var i = 0; i<enemyNames.length; i++){
+        if(playerHealth > 0){
+            window.alert("Welcome to Robot Warriors Round:" + (i+1));
+            var pickedEnemyName = enemyNames[i];
+            enemyHealth = 50;
+
+            fight(pickedEnemyName);
+        } else {
+            window.alert("You have lost your robot battle! Game over!");
+            break;
+        }
+    }
+    // after loop ends player is eiter out of health or enemies,..
+    endGame();
+}
+
+//functon to end game
+var endGame = function(){
+    window.alert("The game has now ended, lets see how you did!")
+    // if player os still alive, player wins"
+    if (playerHealth > 0){
+        window.alert("Great job you survived, you now have: " + playerMoney + " credit.");
+    } else {
+        window.alert("You lost the robot battle");
+    }
+
+    //ask if player wants to play again
+    var playAgainConfirm = window.confirm("Play again?");
+
+    if(playAgainConfirm){
+        startGame();
+    } else {
+        window.alert("Thanks for playing - come back soon")
+    }
+
+
+}
+
+
 // main fight function
 var fight = function (enemyName) {
   // alert users that they are starting the gameround
@@ -81,4 +129,6 @@ for (var i =0;i<enemyNames.length; i++){
     
     fight(pickedEnemyName);
 }
+
+startGame()
 
