@@ -81,7 +81,7 @@ var startGame = function(){
         if(playerHealth > 0){
             window.alert("Welcome to Robot Warriors Round:" + (i+1));
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40,60);
 
             fight(pickedEnemyName);
 
@@ -103,6 +103,13 @@ var startGame = function(){
 }
 
 
+// function to generate a random numeric value between min and max
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+  
+    return value;
+  };
+
 
 
 // main fight function
@@ -111,9 +118,9 @@ var fight = function (enemyName) {
   
   while(enemyHealth>0 && playerHealth>0){
     // ask if user wants to quit
-    var promptFight = window.prompt("FIGHT or skip");
+    var promptFight = window.prompt("FIGHT or skip").toLocaleLowerCase();
     
-    if (promptFight.toLowerCase() === "skip"){
+    if (promptFight === "skip"){
         
         var confirmSkip = window.confirm("Are you sure you want to quit?");
 
@@ -121,7 +128,7 @@ var fight = function (enemyName) {
         if (confirmSkip){
             
             window.alert(playerName + "has decided to skip thuis fight. See ya");
-            playerMoney -= 10;
+            playerMoney = Math.max(0, playerMoney-10);
             console.log("Player Money", playerMoney )
             break;
         }    
@@ -129,11 +136,12 @@ var fight = function (enemyName) {
 
  
     // remove enemy healtn
-    enemyHealth = enemyHealth-playerAttack;
+    var damage = randomNumber(playerAttack-3, playerAttack);
+    enemyHealth = Math.max(0, enemyHealth-damage);
         
     //Log a resulting message to the console so we know it works
     console.log(
-        playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining." 
+        playerName + " attacked " + enemyName + " with damage: " + damage + " ." + enemyName + " now has " + enemyHealth + " health remaining." 
     );
         
     // check enemys health
@@ -145,10 +153,11 @@ var fight = function (enemyName) {
         window.alert(enemyName + " still has: " + enemyHealth + " health left");
     }
 
-    //remove players health 
-    playerHealth = playerHealth - enemyAttack;
+    //remove players health
+    var damage = randomNumber(enemyAttack-3, enemyAttack); 
+    playerHealth = Math.max(0, playerHealth - damage);
     console.log(
-        enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+        enemyName + " attacked " + playerName + " with damage: " + damage +". " + playerName + " now has " + playerHealth + " health remaining."
     );
 
     
