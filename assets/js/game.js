@@ -58,7 +58,7 @@ var startGame = function(){
         
         if(playerInfo.health > 0){
             window.alert("Welcome to Robot Warriors Round:" + (i+1));
-            debugger;
+           
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40,60);
 
@@ -90,6 +90,30 @@ var randomNumber = function(min, max) {
   };
 
 
+var fightOrSkip = function(){
+    // ask user if they will fight or skip the round
+    var promptFight = window.prompt("FIGHT or skip");
+    promptFight = promptFight.toLowerCase()
+
+    //recursive call if 
+    if( promptFight === "" || promptFight === null){
+        window.alert("Please provide a valid answer");
+        return fightOrSkip();
+    }
+    
+    if (promptFight=== "skip"){
+        var confirmSkip = window.confirm("are you sure you want to skip?")
+    }
+    if (confirmSkip){
+        window.alert(playerInfo.name + "has decided to skip thuis fight. See ya");
+        playerInfo.money = Math.max(0, playerInfo.money-10);
+        // Send'em through the exit shop
+        shop()
+        return true;
+    }
+
+}
+
 
 // main fight function
 var fight = function (enemy) {
@@ -98,22 +122,14 @@ var fight = function (enemy) {
   
   while(enemy.health>0 && playerInfo.health>0){
     // ask if user wants to quit
-    var promptFight = window.prompt("FIGHT or skip").toLocaleLowerCase();
-    
-    if (promptFight === "skip"){
-        
-        var confirmSkip = window.confirm("Are you sure you want to quit?");
 
-        //if yes to quit, break
-        if (confirmSkip){
-            
-            window.alert(playerInfo.name + "has decided to skip thuis fight. See ya");
-            playerInfo.money = Math.max(0, playerInfo.money-10);
-            console.log("Player Money", playerInfo.money )
-            break;
-        }    
-    } 
-
+    while (playerInfo.health > 0 && enemy.health > 0) {
+        // ask user if they'd like to fight or skip using fightOrSkip function
+        if (fightOrSkip()) {
+          // if true, leave fight by breaking loop
+          break;
+        }
+    }
  
     // remove enemy healtn
     var damage = randomNumber(playerInfo.attack-3, playerInfo.attack);
@@ -165,11 +181,18 @@ var getPlayerName = function(){
 };
 
 
+var test = function(){
+    var response = prompt("Question?");
+    if(response === "" || response === null){
+        window.alert("You need to provide a valid answer! Try again")
+        test();
+    }
+    return response;
+}
+
 var playerInfo = {
     name : getPlayerName(),
-    // Health: 100,
-    // attack: 10,
-    // money: 10,
+
     reset: function(){
         this.health = 100;
         this.attack = 10;
@@ -195,7 +218,7 @@ var playerInfo = {
           window.alert("You don't have enough money!");
         }
       }
-};
+    };
 
 var enemyInfo = [
     {
@@ -212,6 +235,7 @@ var enemyInfo = [
     }
   ];
 
+  
   // main
 
 startGame()
