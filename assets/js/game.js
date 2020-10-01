@@ -1,13 +1,6 @@
 
 
 
-
-// var enemyNames = ["Roborto", "Amy Andriod", "Robo Trumble"];
-// var enemyHealth = 50;
-// var enemyAttack = 12;
-// var enemyMoney = 10;
-
-
 //functon to end game
 var endGame = function(){
     window.alert("The game has now ended, lets see how you did!")
@@ -34,7 +27,7 @@ var shop = function(){
     // ask what the player wants to do
     var shopOptionPrompt = window.prompt("REFILL health or UPGRADE atttack or LEAVE");
 
-    switch(shopOptionPrompt.toLocaleLowerCase()){
+    switch(shopOptionPrompt.toLowerCase()){
         case "refill":
             playerInfo.refillHealth();
             break;
@@ -56,14 +49,16 @@ var shop = function(){
 
 //function to start a new game
 var startGame = function(){
-    debugger;
+    
     //reset player stats
     playerInfo.reset();
 
     // loop over enemies
     for(var i = 0; i<enemyInfo.length; i++){
+        
         if(playerInfo.health > 0){
             window.alert("Welcome to Robot Warriors Round:" + (i+1));
+            debugger;
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40,60);
 
@@ -157,11 +152,24 @@ var fight = function (enemy) {
 };
 
 
+// function to set name
+var getPlayerName = function(){
+    var name = "";
+    
+    while (name === "" || name === null){
+        name = prompt("what is your robo's name");
+    }
+    //loop here
+    console.log("your robots name is" + name );
+    return name;
+};
+
+
 var playerInfo = {
-    name : window.prompt("What is your robots name?"),
-    Health: 100,
-    attack: 10,
-    money: 10,
+    name : getPlayerName(),
+    // Health: 100,
+    // attack: 10,
+    // money: 10,
     reset: function(){
         this.health = 100;
         this.attack = 10;
@@ -204,6 +212,7 @@ var enemyInfo = [
     }
   ];
 
+  // main
 
 startGame()
 
