@@ -4,6 +4,23 @@
 //functon to end game
 var endGame = function(){
     window.alert("The game has now ended, lets see how you did!")
+    
+    // check localStorage for high score, if it's not there, use 0
+    var highScore = localStorage.getItem("highcsore");
+    if (highScore === null){
+        highScore = 0;
+    }
+
+    // if player credit is higher than highscore then replace it
+    if (playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+
+        window.alert(playerInfo.name + " Now has the higscore of: " + playerInfo.money)
+    } else {
+        window.alert(playerInfo.name + " Did not beat the highscore of " + highScore)
+    }
+
     // if player os still alive, player wins"
     if (playerInfo.health > 0){
         window.alert("Great job you survived, you now have: " + playerInfo.money + " credit.");
@@ -26,7 +43,7 @@ var endGame = function(){
 var shop = function(){
     // ask what the player wants to do
     var shopOptionPrompt = window.prompt("REFILL (1) health or UPGRADE (2) atttack or LEAVE (3)");
-    debugger;
+    
     shopOptionPrompt = parseInt(shopOptionPrompt);
     switch(shopOptionPrompt.toLowerCase()){
         case 1:
