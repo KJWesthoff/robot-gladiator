@@ -3,6 +3,7 @@
 
 //functon to end game
 var endGame = function(){
+    console.log("EndGame function running!")
     window.alert("The game has now ended, lets see how you did!")
     
     // check localStorage for high score, if it's not there, use 0
@@ -10,6 +11,8 @@ var endGame = function(){
     if (highScore === null){
         highScore = 0;
     }
+
+    
 
     // if player credit is higher than highscore then replace it
     if (playerInfo.money > highScore) {
@@ -137,16 +140,12 @@ var fightOrSkip = function(){
 var fight = function (enemy) {
    
       // keep track of who goes first
-  var isPlayerTurn = true;
-  ​
+    var isPlayerTurn = true;
     // randomly change turn order
     if (Math.random() > 0.5) {
-      isPlayerTurn = false;
+        isPlayerTurn = false;
     }
-  ​
 
-
-    
     while (playerInfo.health > 0 && enemy.health > 0) {
         if (isPlayerTurn){
 
