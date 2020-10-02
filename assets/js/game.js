@@ -45,7 +45,7 @@ var shop = function(){
     var shopOptionPrompt = window.prompt("REFILL (1) health or UPGRADE (2) atttack or LEAVE (3)");
     
     shopOptionPrompt = parseInt(shopOptionPrompt);
-    switch(shopOptionPrompt.toLowerCase()){
+    switch(shopOptionPrompt){
         case 1:
             playerInfo.refillHealth();
             break;
@@ -129,7 +129,7 @@ var fightOrSkip = function(){
         shop()
         return true;
     }
-
+    return false;
 }
 
 
